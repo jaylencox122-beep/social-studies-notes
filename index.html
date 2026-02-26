@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Resources | Osseo Area Schools ISD 279</title>
+<link rel="icon" href="https://asset-cdn.schoology.com/sites/all/themes/schoology_theme/favicon.ico">
+<style>
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; display: flex; flex-direction: column; align-items: center; }
+  .navbar { background: #4d226b; color: white; padding: 15px; width: 100%; text-align: left; font-weight: bold; border-bottom: 4px solid #ffb81c; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+  .container { margin-top: 80px; }
+  .card { background: white; border: 1px solid #ddd; padding: 40px; width: 300px; cursor: pointer; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); border-color: #4d226b; }
+  #gate { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 35px; border: 3px solid #4d226b; border-radius: 20px; box-shadow: 0 0 100px rgba(0,0,0,0.5); z-index: 100; }
+  input { padding: 15px; width: 250px; border: 2px solid #eee; border-radius: 8px; font-size: 16px; margin-bottom: 15px; display: block; outline: none; transition: 0.2s; }
+  input:focus { border-color: #4d226b; }
+  button { padding: 15px; background: #4d226b; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 16px; }
+  button:hover { background: #3a1a52; }
+  .disclaimer { font-size: 11px; color: #777; margin-top: 15px; }
+</style>
+</head>
+<body>
+
+<div class="navbar">&nbsp;&nbsp;&nbsp;OSSEO AREA SCHOOLS | ISD 279</div>
+
+<div class="container">
+  <div class="card" onclick="document.getElementById('gate').style.display='block'">
+    <h2 style="color:#4d226b; margin-top:0;">StudentVUE</h2>
+    <p style="color:#666;">Access secure student information and academic records.</p>
+    <div style="color:#4d226b; font-weight:bold; margin-top:20px;">Launch Portal →</div>
+  </div>
+</div>
+
+<div id="gate">
+  <h3 style="margin-top:0; color:#4d226b;">Authentication Required</h3>
+  <input type="password" id="pass" placeholder="Enter Access Code" autofocus>
+  <button onclick="launch()">Sign In</button>
+  <p class="disclaimer">Unauthorized access is monitored. <br>Ref: ISD279-SEC-2026</p>
+</div>
+
+<script>
+  function launch() {
+    const input = document.getElementById('pass').value;
+    
+    if (input !== "20252026") {
+      alert("Invalid Security Token.");
+      return;
+    }
+
+    // DIRECT LINKS - Change these anytime to update your library!
+    const games = [
+      "https://basketballstars2026.github.io/", 
+      "https://basketball-bros.github.io/",     
+      "https://3kh0.github.io/projects/slope/index.html", 
+      "https://retro-bowl.github.io/"
+    ];
+
+    const win = window.open('about:blank', '_blank');
+    if (win) {
+      const docContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Schoology | Course Dashboard</title>
+          <link rel="icon" href="https://asset-cdn.schoology.com/sites/all/themes/schoology_theme/favicon.ico">
+          <style>
+            body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#000; }
+            iframe { width:100%; height:100%; border:none; }
+          </style>
+        </head>
+        <body>
+          <iframe id="f" src="${games[0]}"></iframe>
+          <script>
+            const urls = ${JSON.stringify(games)};
+            let i = 0;
+            window.addEventListener('keydown', e => {
+              const f = document.getElementById('f');
+              const fav = document.querySelector("link[rel*='icon']");
+              
+              if (e.key === '[') { 
+                f.src = "https://docs.google.com/document/u/0/"; 
+                document.title = "Google Docs";
+                fav.href = "https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico";
+              }
+              if (e.key === ']') {
+                f.src = urls[i];
+                document.title = "Schoology | Course Dashboard";
+                fav.href = "https://asset-cdn.schoology.com/sites/all/themes/schoology_theme/favicon.ico";
+              }
+              if (e.shiftKey && e.key.toLowerCase() === 's') {
+                i = (i + 1) % urls.length;
+                f.src = urls[i];
+              }
+            });
+          <\/script>
+        </body>
+        </html>
+      `;
+      win.document.open();
+      win.document.write(docContent);
+      win.document.close();
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('pass').value = '';
+    } else {
+      alert("Please enable pop-ups for this site to access the portal.");
+    }
+  }
+
+  document.getElementById("pass").addEventListener("keyup", e => {
+    if (e.key === "Enter") launch();
+  });
+</script>
+</body>
+</html
